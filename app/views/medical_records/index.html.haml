@@ -1,0 +1,39 @@
+.panel.panel-default
+  .panel-heading Fichier
+  .panel-body
+    = render 'search_form'
+    - if medical_records.empty?
+      .alert.alert-warning.table-warning Aucun enregistrement.
+    - else
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= sortable 'id', "N° du fichier"
+            %th= sortable 'anamnesis', "Annamnèse"
+            %th.price-row= sortable 'total_cost', "Coût des visites"
+            %th Vétérinaire
+            %th.date-row= sortable 'created_at', "Date"
+            %th.btn-row-2
+
+        %tbody
+          - medical_records.each do |medical_record|
+            %tr
+              %td= change_blank_to_dash(medical_record.id)
+              %td= change_blank_to_dash(medical_record.anamnesis)
+              %td= change_blank_to_dash(number_to_currency(medical_record.total_cost, separator: ',', unit: 'EUR', precision: 2))
+              %td= change_blank_to_dash(medical_record.try(:veterinarian).try(:user).try(:decorate).try(:full_name))
+              %td= change_blank_to_dash(medical_record.created_at.to_date)
+              %td
+                .pull-right
+                  = link_to icon('list-alt'), user_medical_record_path(user, medical_record), title: 'Détails', class: "btn btn-default"
+                  - unless current_user.pacjent?
+                    = link_to icon('edit'), edit_user_medical_record_path(user, medical_record), title: 'Modifier', class: "btn btn-default"
+
+    .pull-right
+      - if current_user.pacjent?
+        = link_to 'Aller au profil', profile_path, class: 'btn btn-default'
+      - else
+        = link_to 'Vers le propriétaire du profil', user_path(user), class: 'btn btn-default'
+
+    .flickr_pagination
+      = will_paginate medical_records

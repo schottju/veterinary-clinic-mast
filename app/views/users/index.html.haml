@@ -1,0 +1,31 @@
+.panel.panel-default
+  .panel-heading Propriétaires
+  .panel-body
+    = render 'search_form'
+    - if patients.empty?
+      .alert.alert-warning.table-warning Aucun enregistrement.
+    - else
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= sortable 'first_name', "Prénom"
+            %th= sortable 'last_name', "Nom"
+            %th= sortable 'pesel', "N° sécu"
+            %th= sortable 'email', "Email"
+            %th= sortable 'phone_number', "Téléphone"
+            %th
+
+        %tbody
+          - patients.each do |patient|
+            %tr
+              %td= change_blank_to_dash(patient.first_name)
+              %td= change_blank_to_dash(patient.last_name)
+              %td= change_blank_to_dash(patient.pesel)
+              %td= change_blank_to_dash(patient.email)
+              %td= change_blank_to_dash(patient.phone_number)
+              %td
+                .pull-right
+                  = link_to icon('list-alt'), user_path(patient), title: 'Détails', class: "btn btn-default"
+
+      .flickr_pagination
+        = will_paginate patients

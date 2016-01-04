@@ -1,0 +1,16 @@
+connection: &connection
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  pool:     5
+  username: postgres
+  password: password
+development:
+  <<: *connection
+  database: veterinary_clinic_development
+test:
+  <<: *connection
+  database: veterinary_clinic_test
+production:
+  <<: *connection
+  database: veterinary_clinic_production

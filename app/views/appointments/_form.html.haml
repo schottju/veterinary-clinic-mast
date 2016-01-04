@@ -1,0 +1,22 @@
+= simple_form_for [ user, appointment ] do |f|
+  = f.error_notification
+  .form-inputs
+    = f.hidden_field :day
+    = f.hidden_field :veterinarian_id
+    .row
+      .col-md-1
+      .col-md-3
+        = f.input :time, label: 'Heure'
+        = f.input :kind, label: 'Raison'
+      .col-md-7
+        = f.input :description, label: 'Description', placeholder: 'Entrez les symptômes de la maladie, objet de la visite, des informations sur animal (espèce, le poids, âge, le nombre animaux)', input_html: { rows:  5 }
+      .col-md-1
+    .row
+      .form-actions
+        .col-md-1
+        .col-md-5
+          = link_to "Annuler", user_appointments_path(user), class: "btn btn-default"
+        .col-md-5
+          .pull-right
+            = f.button :submit, "Sauvegarder", class: "btn btn-default"
+        .col-md-1

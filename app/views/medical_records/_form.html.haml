@@ -1,0 +1,33 @@
+= simple_form_for [ user, medical_record ] do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :anamnesis, label: 'Anamnèse', placeholder: 'Entrez anamnèse', autofocus: true
+    = f.hidden_field :user_id, value: user.id
+    = f.hidden_field :veterinarian_id, value: current_user.try(:veterinarian).try(:id)
+    = f.input :animal_ids, label: 'Animaux', collection: @animals, input_html: { multiple: true }
+    .row
+      .col-md-4
+        = f.input :treatment_ids, label: 'Traitements effectués', collection: @treatments, input_html: { multiple: true }
+      .col-md-4
+        = f.input :disease_ids, label: 'Maladies reconnues', collection: @diseases, input_html: { multiple: true }
+      .col-md-4
+        = f.input :picture_ids, label: 'Images', collection: @pictures, input_html: { multiple: true }
+    .panel.panel-info
+      .panel-heading Médicaments
+      .panel-body
+        #medicines
+          = f.simple_fields_for :medicines do |medicine|
+            = render 'medicine_fields', f: medicine
+          .links.centered
+            = link_to_add_association 'Ajouter un médicament', f, :medicines, class: 'btn btn-default'
+    .row
+      .col-md-5
+        = f.input :description, label: 'Description', placeholder: 'Entrez description'
+      .col-md-4
+        = f.input :comment, label: 'Commentaires', placeholder: 'Entrez commentaires'
+      .col-md-3
+        = f.input :additional_cost, label: 'Coût supplémentaire', placeholder: 'Ajoutez le coût', as: :string, input_html: { value: change_period_to_comma(f.object.additional_cost) }
+  .form-actions
+    = link_to 'Annuler', user_medical_records_path(user), class: 'btn btn-default'
+    .pull-right
+      = f.button :submit, "Sauvegarder"

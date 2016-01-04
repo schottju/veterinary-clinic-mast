@@ -1,0 +1,33 @@
+.panel.panel-default
+  .panel-heading Editez la visite
+  .panel-body
+    = simple_form_for @appointment, url: update_veterinarian_appointment_path do |f|
+      = f.error_notification
+      .form-inputs
+        .row
+          .col-md-1
+          .col-md-3
+            = f.input :day, label: 'Jour', placeholder: 'dd/mm/rr', as: :date_picker
+          .col-md-3
+            = f.input :veterinarian_id, label: 'Vétérinaire', required: true, collection: Veterinarian.all.map { |veterinarian| [ "#{veterinarian.try(:user).try(:decorate).try(:full_name)}", veterinarian.id ] }
+          .col-md-2
+            = f.input :time, label: 'Heure'
+          .col-md-2
+            = f.input :kind, label: 'Raison du rendez-vous'
+          .col-md-1
+        .row
+          .col-md-1
+          .col-md-7
+            = f.input :description, label: 'Description', placeholder: 'Entrez les symptômes de la maladie, objet de la visite, des informations sur votre animal (espèce, le poids, âge, le nombre de patients)'
+          .col-md-3
+            = f.input :status, label: 'Status'
+          .col-md-1
+      .row
+        .form-actions
+          .col-md-1
+          .col-md-5
+            = link_to "Annuler", veterinarian_appointments_path, class: "btn btn-default"
+          .col-md-5
+            .pull-right
+              = f.button :submit, "Validez", class: "btn btn-default"
+          .col-md-1

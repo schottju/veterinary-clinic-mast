@@ -1,0 +1,34 @@
+.panel.panel-default
+  .panel-heading Visites à venir
+  .panel-body
+    = render 'veterinarian_search_form'
+    - if appointments.empty?
+      .alert.alert-warning.table-warning Pas de visites.
+    - else
+      %table.table.table-striped
+        %thead
+          %tr
+            %th.date-row= sortable 'day', "Date"
+            %th= sortable 'time', "Heure"
+            %th= sortable 'kind', "Raison"
+            %th= sortable 'status', "Status"
+            %th Propriétaire
+            %th.btn-row-4
+
+        %tbody
+          - appointments.each do |appointment|
+            %tr
+              %td= change_blank_to_dash(appointment.day)
+              %td= change_blank_to_dash(appointment.time)
+              %td= change_blank_to_dash(appointment.kind)
+              %td= change_blank_to_dash(appointment.status)
+              %td= change_blank_to_dash(appointment.try(:user).try(:decorate).try(:full_name))
+              %td
+                .pull-right
+                  = link_to  icon('list-alt'), veterinarian_appointment_path(appointment, user_id: appointment.user_id), title: 'Détails', class: "btn btn-default"
+                  = link_to  icon('pencil-square-o'), edit_veterinarian_appointment_path(appointment, user_id: appointment.user_id), title: 'Editer', class: "btn btn-default"
+                  = link_to icon('check-square-o'), veterinarian_accept_path(appointment, user_id: appointment.user_id), title: 'Accepter', method: :patch, class: "btn btn-default"
+                  = link_to icon('trash-o'), veterinarian_cancel_path(appointment, user_id: appointment.user_id), title: 'Annuler', method: :patch, class: "btn btn-default"
+
+      .flickr_pagination
+        = will_paginate appointments

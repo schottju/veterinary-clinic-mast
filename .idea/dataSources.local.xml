@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Rails veterinary-clinic-master: development" uuid="75f4a3e8-c3ef-447a-a3f4-dd19e7b36ce5">
+      <user-name>postgres</user-name>
+      <user-password>dfdadfcbdfd9dfd9dfdddfc5dfd8dfce</user-password>
+      <schema-pattern>veterinary_clinic_development.pg_catalog veterinary_clinic_development.public</schema-pattern>
+      <default-schemas>veterinary_clinic_development.pg_catalog veterinary_clinic_development.public</default-schemas>
+    </data-source>
+    <data-source name="Rails veterinary-clinic-master: test" uuid="8553b3ef-45bb-46e8-98c7-70f2361dac5f">
+      <user-name>postgres</user-name>
+      <user-password>dfdadfcbdfd9dfd9dfdddfc5dfd8dfce</user-password>
+      <schema-pattern>veterinary_clinic_test.pg_catalog veterinary_clinic_test.public</schema-pattern>
+      <default-schemas>veterinary_clinic_test.pg_catalog veterinary_clinic_test.public</default-schemas>
+    </data-source>
+    <data-source name="Rails veterinary-clinic-master: production" uuid="9734625f-09d5-4e06-a432-841ec38dbceb">
+      <user-name>postgres</user-name>
+      <user-password>dfdadfcbdfd9dfd9dfdddfc5dfd8dfce</user-password>
+      <schema-pattern>veterinary_clinic_production.pg_catalog veterinary_clinic_production.public</schema-pattern>
+      <default-schemas>veterinary_clinic_production.pg_catalog veterinary_clinic_production.public</default-schemas>
+    </data-source>
+  </component>
+</project>

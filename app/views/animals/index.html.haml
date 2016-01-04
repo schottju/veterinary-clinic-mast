@@ -1,0 +1,43 @@
+.panel.panel-default
+  .panel-heading Animal
+  .panel-body
+    = render 'search_form'
+    - if animals.empty?
+      .alert.alert-warning.table-warning Pas animaux.
+    - else
+      %table.table.table-striped
+        %thead
+          %tr
+            %th= sortable 'id_number', "N° indentification"
+            %th= sortable 'name', "Nom"
+            %th= sortable 'weight', "Poids (kg)"
+            %th= sortable 'age', "Âge (ans)"
+            %th= sortable 'gender', "Sexe"
+            %th= sortable 'amount', "Quantité"
+            %th Espèce
+            %th.btn-row-2
+
+        %tbody
+          - animals.each do |animal|
+            %tr
+              %td= change_blank_to_dash(animal.id_number)
+              %td= change_blank_to_dash(animal.name)
+              %td= change_blank_to_dash(number_with_delimiter(trim_float(animal.weight), delimiter: " ", separator: ","))
+              %td= change_blank_to_dash(number_with_delimiter(trim_float(animal.age), delimiter: " ", separator: ","))
+              %td= change_blank_to_dash(animal.gender)
+              %td= change_blank_to_dash(animal.amount)
+              %td= change_blank_to_dash(animal.try(:species).try(:name))
+              %td
+                .pull-right
+                  = link_to icon('list-alt'), user_animal_path(user, animal), title: 'Animaux', class: "btn btn-default"
+                  - unless current_user.pacjent?
+                    = link_to icon('edit'), edit_user_animal_path(user, animal), title: 'Modifier', class: "btn btn-default"
+
+    .pull-right
+      - if current_user.pacjent?
+        = link_to 'Aller au profil', profile_path, class: 'btn btn-default'
+      - else
+        = link_to "Vers le propriétaire du profil", user_path(user), class: "btn btn-default"
+
+    .flickr_pagination
+      = will_paginate animals

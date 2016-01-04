@@ -1,0 +1,40 @@
+.panel.panel-default
+  .panel-heading Rendz-vous à venir
+  .panel-body
+    = render 'search_form'
+    - if appointments.empty?
+      .alert.alert-warning.table-warning Pas de rendez-vous.
+    - else
+      %table.table.table-striped
+        %thead
+          %tr
+            %th.date-row= sortable 'day', "Date"
+            %th= sortable 'time', "Heure"
+            %th= sortable 'kind', "Raison"
+            %th= sortable 'status', "Status"
+            %th Weterynarz
+            %th
+
+        %tbody
+          - appointments.each do |appointment|
+            %tr
+              %td= change_blank_to_dash(appointment.day)
+              %td= change_blank_to_dash(appointment.time)
+              %td= change_blank_to_dash(appointment.kind)
+              %td= change_blank_to_dash(appointment.status)
+              %td= change_blank_to_dash(appointment.try(:veterinarian).try(:user).try(:decorate).try(:full_name))
+              %td
+                .pull-right
+                  = link_to icon('list-alt'), user_appointment_path(user, appointment), title: 'Détails', class: "btn btn-default"
+                  - unless current_user.pacjent?
+                    = link_to icon('edit'), edit_user_appointment_path(appointment.user_id, appointment), title: 'Modifier', class: "btn btn-default"
+                  = link_to icon('trash-o'), user_appointment_cancel_path(appointment.user_id, appointment), title: 'Annuler', method: :patch, class: "btn btn-default"
+
+    .pull-right
+      - if current_user.pacjent?
+        = link_to 'Aller au profil', profile_path, class: 'btn btn-default'
+      - else
+        = link_to "Aller au profil du propriétaire", user_path(user), class: "btn btn-default"
+
+    .flickr_pagination
+      = will_paginate appointments

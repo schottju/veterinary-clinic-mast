@@ -1,0 +1,109 @@
+.panel.panel-default
+  .panel-heading= "Rendes-vous #{appointment.day}"
+  .panel-body
+    .panel.panel-info
+      .panel-heading Données du propriétaire:
+      .panel-body
+        .row
+          .col-md-3
+            = image_tag appointment.try(:user).gravatar_url(size: 200)
+          .col-md-4
+            %table.table
+              %thead
+                %tr
+                  %th
+              %tbody
+                %tr
+                  %th Prénom:
+                  %td= change_blank_to_dash(appointment.try(:user).try(:first_name))
+                %tr
+                  %th Nom:
+                  %td= change_blank_to_dash(appointment.try(:user).try(:last_name))
+                %tr
+                  %th N° sécu:
+                  %td= change_blank_to_dash(appointment.try(:user).try(:pesel))
+                %tr
+                  %th Téléphone:
+                  %td= change_blank_to_dash(appointment.try(:user).try(:phone_number))
+                %tr
+                  %th Email:
+                  %td= change_blank_to_dash(appointment.try(:user).try(:email))
+                %tr
+                  %th Nationalité:
+                  %td= change_blank_to_dash(appointment.try(:user).try(:address).try(:decorate).try(:full_country_name))
+                %tr
+                  %td
+          .col-md-4
+            %table.table
+              %thead
+                %tr
+                  %th
+              %tbody
+                %tr
+                  %th Rue:
+                  %td= change_blank_to_dash(appointment.try(:user).try(:address).try(:decorate).try(:full_street))
+                %tr
+                  %th Code postal:
+                  %td= change_blank_to_dash(appointment.try(:user).try(:address).try(:zip_code))
+                %tr
+                  %th Ville:
+                  %td= change_blank_to_dash(appointment.try(:user).try(:address).try(:city))
+                %tr
+                  %th Arrondissement:
+                  %td= change_blank_to_dash(appointment.try(:user).try(:address).try(:borough))
+                %tr
+                  %th Département:
+                  %td= change_blank_to_dash(appointment.try(:user).try(:address).try(:district))
+                %tr
+                  %th Région:
+                  %td= change_blank_to_dash(appointment.try(:user).try(:address).try(:province))
+                %tr
+                  %td
+          .col-md-1
+    .panel.panel-info
+      .panel-heading Les rendez-vous:
+      .panel-body
+        .row
+          .col-md-1
+          .col-md-5
+            %table.table
+              %thead
+                %tr
+                  %th Détails
+            %table.table
+              %tbody
+                %tr
+                  %th.col-md-1 Date:
+                  %td= change_blank_to_dash(appointment.day)
+                %tr
+                  %th.col-md-1 Heure:
+                  %td= change_blank_to_dash(appointment.time)
+                %tr
+                  %th.col-md-1 Status:
+                  %td= change_blank_to_dash(appointment.status)
+                %tr
+                  %th.col-md-1 Raison:
+                  %td= change_blank_to_dash(appointment.kind)
+                %tr
+                  %th.col-md-1 Vétérinaire:
+                  %td= change_blank_to_dash(appointment.try(:veterinarian).try(:user).try(:decorate).try(:full_name))
+                %tr
+                  %td
+          .col-md-5
+            %table.table
+              %thead
+                %tr
+                  %th Description
+            %table.table
+              %tbody
+                %tr
+                  %td= "#{change_blank_to_dash(appointment.description)}"
+                %tr
+                  %td
+          .col-md-1
+
+    .pull-right
+      - if current_user.weterynarz?
+        = link_to "Aller aux rdv du propriétaire", user_appointments_path(user), class: "btn btn-default"
+      - else
+        = link_to "Aller aux rdv", user_appointments_path(user), class: "btn btn-default"

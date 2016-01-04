@@ -1,0 +1,27 @@
+.panel.panel-default
+  .panel-heading Détails photos
+  .panel-body
+    .row
+      .col-md-6
+        = link_to image_tag(picture.image, width: 420), picture.image.url
+      .col-md-6
+        %table.table
+          %tbody
+            %tr
+              %th.col-md-1 Nom:
+              %td= change_blank_to_dash(picture.name)
+            %tr
+              %th.col-md-1 Utilisateur:
+              %td= change_blank_to_dash(picture.try(:user).try(:decorate).try(:full_name))
+            %tr
+              %th.col-md-1 Animal:
+              %td= picture.decorate.print_animal_id
+            %tr
+              %th.col-md-1 Description image:
+              %td= change_blank_to_dash(picture.description)
+            %tr
+              %td
+    .row
+      .col-md-12
+        .pull-right
+          = link_to 'Aller à la galerie', user_pictures_path(user), class: 'btn btn-default'

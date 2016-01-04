@@ -1,0 +1,6 @@
+= form_tag veterinarian_appointments_path(current_user.try(:veterinarian)), method: :get do
+  = hidden_field_tag :direction, params[:direction]
+  = hidden_field_tag :sort, params[:sort]
+  .form-inline
+    = text_field_tag :search, params[:search], placeholder: 'Entrez votre rendez-vous', class: 'form-control', size: 20
+    = submit_tag "Valider", name: nil, class: 'btn btn-default'
